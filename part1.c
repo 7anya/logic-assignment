@@ -7,9 +7,11 @@
 4. <Dinank Vashishtha> <ID 2018B5A71055H>
 */
 
-
 #include <stdio.h>
+#include<math.h>
+#include<stdlib.h>
 #include <string.h>
+#include<assert.h>
 
 #define MAX 100 // macro indicating the maximum size of stack
 
@@ -69,8 +71,12 @@ char eval_formula(int n, char formula[], char operand_val[]) {
     char result;
     int len = strlen(formula);
     for (int i = 0; i < len; ++i) {
-        if (formula[i] == 'T' || formula[i] == 'F') {
-            push(formula[i], operand_stack, &operand_top);
+        if (formula[i]>48 && formula[i]<=57) {
+            int ind = formula[i] - 48;
+            //printf("Index:%d\t",ind);
+            char tvalue = operand_val[ind-1];
+            push(tvalue, operand_stack, &operand_top);
+//            push(formula[i], operand_stack, &operand_top);
 
         } else if (formula[i] == '~' || formula[i] == 'V' || formula[i] == '^' || formula[i] == '>') {
             push(formula[i], operator_stack, &operator_top);
@@ -205,8 +211,14 @@ int main() {
     int n; // number of operands
     char formula[MAX]; // character array to store the input formula
     char operand_val[10]; // array to store the valuation of operands (either T or F)
-    printf("%c",eval_formula(5, "(F>((~T)^T))VT", operand_val));
+//    printf("%c",eval_formula(5, "(F>((~T)^T))VT", operand_val));
+    scanf("%d",&n); //Inputting integer n
 
+//    fgets(formula); //Inputting the formula as a string
+//    fgets(operand_val);
+    scanf("%s",formula);
+    scanf("%s",operand_val);
+    printf("%c",eval_formula(n, formula, operand_val));
     // Complete the main function to get the inputs and call the implementation function
 
     return 0;
