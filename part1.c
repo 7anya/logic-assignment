@@ -8,10 +8,8 @@
 */
 
 #include <stdio.h>
-#include<math.h>
-#include<stdlib.h>
+
 #include <string.h>
-#include<assert.h>
 
 #define MAX 100 // macro indicating the maximum size of stack
 
@@ -46,6 +44,7 @@ char pop(char stack[], int *top) {
         return data;
     } else {
         printf("Could not retrieve data, Stack is empty.\n");
+        return 'e';
     }
 }
 
@@ -71,10 +70,10 @@ char eval_formula(int n, char formula[], char operand_val[]) {
     char result;
     int len = strlen(formula);
     for (int i = 0; i < len; ++i) {
-        if (formula[i]>48 && formula[i]<=57) {
+        if (formula[i] > 48 && formula[i] <= 57) {
             int ind = formula[i] - 48;
             //printf("Index:%d\t",ind);
-            char tvalue = operand_val[ind-1];
+            char tvalue = operand_val[ind - 1];
             push(tvalue, operand_stack, &operand_top);
 //            push(formula[i], operand_stack, &operand_top);
 
@@ -86,7 +85,8 @@ char eval_formula(int n, char formula[], char operand_val[]) {
         } else if (formula[i] == ')') {
             while (operator_stack[operator_top] != '(') {
                 //process
-                if (operator_stack[operator_top] == 'V' || operator_stack[operator_top] == '^' || operator_stack[operator_top] == '>') {
+                if (operator_stack[operator_top] == 'V' || operator_stack[operator_top] == '^' ||
+                    operator_stack[operator_top] == '>') {
                     /*
                     a. Pop-out two truth values from the operand stack; let’s say it is T and F.
                     b. Pop-out operation from operator stack. Let’s say it is V.
@@ -107,13 +107,11 @@ char eval_formula(int n, char formula[], char operand_val[]) {
                             result = 'T';
                         else
                             result = 'F';
-                    }
-                    else if(operator=='>')
-                    {
-                        if(second=='T' && first=='F')
-                            result='F';
+                    } else if (operator == '>') {
+                        if (second == 'T' && first == 'F')
+                            result = 'F';
                         else
-                            result='T';
+                            result = 'T';
                     }
                     push(result, operand_stack, &operand_top);
                 } else {
@@ -141,60 +139,7 @@ char eval_formula(int n, char formula[], char operand_val[]) {
 //        printf("for");
     }
 
-    while (operator_top != -1) {
-        //process starts
-        int i=0;
-//        printf("while:%d\n",i++);
 
-        if (operator_stack[0] == 'V' || operator_stack[0] == '^' || operator_stack[0] == '>') {
-            /*
-            a. Pop-out two truth values from the operand stack; let’s say it is T and F.
-            b. Pop-out operation from operator stack. Let’s say it is V.
-            c. Perform T V F and push the result to the operand stack.
-                  */
-
-            char first = pop(operand_stack, &operand_top);
-            char second = pop(operand_stack, &operand_top);
-            char oper = pop(operator_stack, &operator_top);
-            if (oper == 'V') {
-                if (first == 'F' && second == 'F')
-                    result = 'F';
-                else
-                    result = 'T';
-
-            } else if (oper == '^') {
-                if (first == 'T' && second == 'T')
-                    result = 'T';
-                else
-                    result = 'F';
-            } else {
-                if (second == 'T' && first == 'F')
-                    result = 'F';
-                else
-                    result = 'T';
-            }
-            push(result, operand_stack, &operand_top);
-        } else {
-            /*
-            a. Pop-out one truth value from the operand stack
-            b. Pop-out operation from operator stack.
-            c. Perform the operation on the operand and push the result back to the operand stack.
-            */
-            char first = pop(operand_stack, &operand_top);
-            char oper = pop(operator_stack, &operator_top);
-            char result;
-            if (first == 'T')
-                result = 'F';
-            else
-                result = 'T';
-            push(result, operand_stack, &operand_top);
-
-
-        }
-
-        //process ends
-
-    }
     return operand_stack[operand_top];
 
 
@@ -211,15 +156,11 @@ int main() {
     int n; // number of operands
     char formula[MAX]; // character array to store the input formula
     char operand_val[10]; // array to store the valuation of operands (either T or F)
-//    printf("%c",eval_formula(5, "(F>((~T)^T))VT", operand_val));
-    scanf("%d",&n); //Inputting integer n
+    scanf("%d", &n); //Inputting integer n
+    scanf("%s", formula);
+    scanf("%s", operand_val);
+    printf("%c", eval_formula(n, formula, operand_val));
 
-//    fgets(formula); //Inputting the formula as a string
-//    fgets(operand_val);
-    scanf("%s",formula);
-    scanf("%s",operand_val);
-    printf("%c",eval_formula(n, formula, operand_val));
-    // Complete the main function to get the inputs and call the implementation function
 
     return 0;
 
