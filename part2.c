@@ -1,5 +1,5 @@
 /* Logic Homework 3, Part 1 */
-/* Team Number: X */
+/* Team Number: 62 */
 /* Team Members:
 1. <Tanya Prasad> <ID 2018B5A71054H>
 2. <Virag Lakhani> <ID 2018B3A70973H>
@@ -156,7 +156,9 @@ int main() {
     int n; // number of operands
     char formula[MAX]; // character array to store the input formula
     char operand_val[10]; // array to store the valuation of operands (either T or F)
+    printf("Enter the number of atoms:\n");
     scanf("%d", &n); //Inputting integer n
+    printf("Enter the formula:\n");
     scanf("%s", formula);
     printf("Truth table\n");
     int l = (int) pow(2, n);
@@ -180,7 +182,7 @@ int main() {
         mod /= 2;
 
     }
-    // calculate formula value print,truth table and check validity and satisfiability 
+    // calculate formula value print,truth table and check validity and satisfiability
     int count = 0;
     for (int i = 0; i < pow(2, n); ++i) {
         for (int j = 0; j < n; ++j) {
@@ -217,7 +219,6 @@ int main() {
                 printf(" V ");
             /* code */
         }
-        a[i][n] = eval_formula(n, formula, a[i]);
         printf(")");
     }
 
