@@ -180,7 +180,7 @@ int main() {
         mod /= 2;
 
     }
-
+    // calculate formula value print,truth table and check validity and satisfiability 
     int count = 0;
     for (int i = 0; i < pow(2, n); ++i) {
         for (int j = 0; j < n; ++j) {
@@ -199,6 +199,8 @@ int main() {
         printf("Formula is valid\nT\n");
     else
         printf("Formula is invalid\n");
+
+    //print CNF
     int flag = 0;
     for (int i = 0; i < pow(2, n); ++i) {
         if (a[i][n] == 'T')
